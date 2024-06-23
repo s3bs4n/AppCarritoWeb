@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Producto {
     id: number;
@@ -119,14 +120,18 @@ export class CarritoComponent implements OnInit {
         return '$' + precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 
-
+    irAPagar(): void {
+      this.guardarCarritoEnLocalStorage();
+      this.router.navigate(['/listado-productos']);
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   articulosCarrito: CarritoProducto[] = [];
 
-  constructor() {}
+  // constructor() {}
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.articulosCarrito = this.obtenerCarritoDeLocalStorage();

@@ -1,1 +1,32 @@
-<p>lista-productos works!</p>
+<!-- listado-productos.component.html -->
+<div class="container py-5">
+    <h2 class="text-center mb-4">Confirmar Compra</h2>
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Cantidad</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of articulosCarrito">
+          <td><img [src]="producto.imagen" width="100"></td>
+          <td>{{ producto.titulo }}</td>
+          <td>{{ producto.precio }}</td>
+          <td>{{ producto.cantidad }}</td>
+          <td>{{ (parseFloat(producto.precio.replace(/[\$,\.]/g, '')) * producto.cantidad) | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-end">
+      <h4>Total: {{ precioTotal | currency }}</h4>
+    </div>
+    <div class="text-center mt-4">
+      <button class="btn btn-success w-25">Confirmar</button>
+      <button class="btn btn-danger w-25" (click)="vaciarCarrito()">Cancelar</button>
+    </div>
+  </div>
+  

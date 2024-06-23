@@ -1,76 +1,61 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
-interface CarritoProducto {
+interface ProductoCarrito {
   imagen: string;
-  titulo: string;
-  precio: string;
-  id: string;
+  nombre: string;
+  precio: number;
   cantidad: number;
 }
 
 @Component({
   selector: 'app-lista-productos',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './lista-productos.component.html',
   styleUrl: './lista-productos.component.css'
 })
 
 export class ListaProductosComponent implements OnInit {
-  articulosCarrito: CarritoProducto[] = [];
+  productosCarrito: ProductoCarrito[] = [];
   precioTotal: number = 0;
 
-  constructor(private router: Router) { }
-
   ngOnInit(): void {
-    this.articulosCarrito = this.obtenerCarritoDeLocalStorage();
-    this.calcularPrecioTotal();
-  }
-  // ngOnInit(): void {
-  //   this.cargarProductosDelCarrito();
-  // }
-
-  obtenerCarritoDeLocalStorage(): CarritoProducto[] {
-    const carrito = localStorage.getItem('articulosCarrito');
-    return carrito ? JSON.parse(carrito) : [];
-  }
-  calcularPrecioTotal(): void {
-    this.precioTotal = this.articulosCarrito.reduce((total, producto) => {
-      const precioNumerico = parseFloat(producto.precio.replace(/[\$,\.]/g, ''));
-      return total + (precioNumerico * producto.cantidad);
-    }, 0);
+    if (this.isLocalStorageAvailable()) {
+      this.cargarProductosCarrito();
+    } else {
+      console.error('localStorage no está disponible');
+    }
   }
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  isLocalStorageAvailable(): boolean {
+    try {
+      const test = '__storage_test__';
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
-  cargarProductosDelCarrito(): void {
-    
-    const productosCarrito = JSON.parse(localStorage.getItem('articulosCarrito')) || [];
-    const contenedorPago = document.querySelector('#lista-carrito tbody');
-    this.precioTotal = 0;
-
-    productosCarrito.forEach((producto: CarritoProducto) => {
-      const row = document.createElement('tr');
-      
-      const precioNumerico = parseInt(producto.precio.replace(/[\$,\.]/g, ''));
-
-      row.innerHTML = `
-        <td><img src="${producto.imagen}" width="100"></td>
-        <td>${producto.titulo}</td>
-        <td class="precio">${producto.precio}</td>
-        <td>${producto.cantidad}</td>
-        <td>$${(precioNumerico * producto.cantidad).toLocaleString()}</td>
-      `;
-      
-      contenedorPago.appendChild(row);
-      this.precioTotal += precioNumerico * producto.cantidad;
+  cargarProductosCarrito(): void {
+    const productosCarrito = JSON.parse(localStorage.getItem('articulosCarrito') || '[]');
+    this.productosCarrito = productosCarrito.map((producto: any) => {
+      // const precioNumerico = parseFloat(producto.precio.replace(/[\$,\.]/g, ''));
+      return {
+        imagen: producto.imagen,
+        nombre: producto.nombre,
+        precio: producto.precio,
+        cantidad: producto.cantidad
+      };
     });
 
-    const contenedorTotal = document.querySelector('#precioTotal');
-    const precioTotalElemento = document.createElement('div');
-    precioTotalElemento.textContent = `$${this.precioTotal.toLocaleString()}`;
-    contenedorTotal.appendChild(precioTotalElemento);
+    this.calcularPrecioTotal();
+  }
+
+  calcularPrecioTotal(): void {
+    this.precioTotal = this.productosCarrito.reduce((total, producto) => total + (producto.precio * producto.cantidad), 0);
   }
 }

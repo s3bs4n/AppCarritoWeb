@@ -5,5 +5,7 @@ import { ListaProductosComponent } from './components/lista-productos/lista-prod
 export const routes: Routes = [
     { path: 'carrito', component: CarritoComponent },
     { path: 'lista-productos', component: ListaProductosComponent },
-    { path: '**', redirectTo: 'carrito' }
+    { path: '**', redirectTo: 'lista-productos' }
 ];
+
+

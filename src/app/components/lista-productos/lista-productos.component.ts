@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+
+declare var bootstrap: any;
 
 interface ProductoCarrito {
   imagen: string;
@@ -14,48 +16,47 @@ interface ProductoCarrito {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './lista-productos.component.html',
-  styleUrl: './lista-productos.component.css'
+  styleUrls: ['./lista-productos.component.css']
 })
-
-export class ListaProductosComponent implements OnInit {
+export class ListaProductosComponent implements OnInit, AfterViewInit {
   productosCarrito: ProductoCarrito[] = [];
   precioTotal: number = 0;
+  modalInstance: any;
 
-  ngOnInit(): void {
-    if (this.isLocalStorageAvailable()) {
-      this.cargarProductosCarrito();
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    const productosCarrito = localStorage.getItem('articulosCarrito');
+    if (productosCarrito) {
+      this.productosCarrito = JSON.parse(productosCarrito);
+      this.calcularPrecioTotal();
+    }
+  }
+
+  ngAfterViewInit() {
+    const modalElement = document.getElementById('modalChoice');
+    if (modalElement) {
+      this.modalInstance = new bootstrap.Modal(modalElement);
+    }
+  }
+
+  calcularPrecioTotal() {
+    this.precioTotal = this.productosCarrito.reduce((total, producto) => {
+      return total + producto.precio * producto.cantidad;
+    }, 0);
+  }
+
+  volverAlInicio() {
+    localStorage.removeItem('articulosCarrito');
+
+    if (this.modalInstance) {
+      this.modalInstance.hide();
+      // Espera un momento antes de redirigir para asegurar que el modal se oculta completamente
+      setTimeout(() => {
+        this.router.navigate(['/carrito']);
+      }, 300); // 300ms debería ser suficiente para el efecto de ocultar
     } else {
-      console.error('localStorage no está disponible');
+      this.router.navigate(['/carrito']);
     }
-  }
-
-  isLocalStorageAvailable(): boolean {
-    try {
-      const test = '__storage_test__';
-      localStorage.setItem(test, test);
-      localStorage.removeItem(test);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  cargarProductosCarrito(): void {
-    const productosCarrito = JSON.parse(localStorage.getItem('articulosCarrito') || '[]');
-    this.productosCarrito = productosCarrito.map((producto: any) => {
-      // const precioNumerico = parseFloat(producto.precio.replace(/[\$,\.]/g, ''));
-      return {
-        imagen: producto.imagen,
-        nombre: producto.nombre,
-        precio: producto.precio,
-        cantidad: producto.cantidad
-      };
-    });
-
-    this.calcularPrecioTotal();
-  }
-
-  calcularPrecioTotal(): void {
-    this.precioTotal = this.productosCarrito.reduce((total, producto) => total + (producto.precio * producto.cantidad), 0);
   }
 }

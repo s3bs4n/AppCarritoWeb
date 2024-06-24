@@ -122,7 +122,11 @@ export class CarritoComponent implements OnInit {
 
     irAPagar(): void {
       this.guardarCarritoEnLocalStorage();
-      this.router.navigate(['/listado-productos']);
+      this.router.navigate(['/lista-productos']);
+    }
+
+    salir(): void {
+      this.router.navigate(['/login']);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,7 +190,7 @@ export class CarritoComponent implements OnInit {
 
   pagarCarrito(): void {
     this.guardarCarritoEnLocalStorage();
-    window.location.href = 'pago.html';
+    window.location.href = 'listado-productos.component.html';
   }
 
   formatCurrency(value: number): string {

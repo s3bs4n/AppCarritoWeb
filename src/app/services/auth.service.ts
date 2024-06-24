@@ -1,9 +1,7 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 
 interface User {
+  nombre: string;
   email: string;
   password: string;
 }
@@ -12,34 +10,44 @@ interface User {
   providedIn: 'root'
 })
 export class AuthService {
-  private users: User[] = JSON.parse(localStorage.getItem('users')) || [];
+  private users: User[] = [];
 
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  constructor() {
+    const storedUsers = localStorage.getItem('users');
+    if (storedUsers) {
+      this.users = JSON.parse(storedUsers);
+    }
+  }
 
-  constructor(private router: Router) {}
+  register(nombre: string, email: string, password: string): boolean {
+    if (this.users.find(user => user.email === email)) {
+      return false; // Usuario ya registrado
+    }
+
+    const newUser: User = { nombre, email, password };
+    this.users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(this.users));
+    return true;
+  }
 
   login(email: string, password: string): boolean {
-    const user = this.users.find(u => u.email === email && u.password === password);
-    if (user) {
-      this.currentUserSubject.next(user);
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      return true;
-    }
-    return false;
-  }
-
-  logout(): void {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
-  }
-
-  getCurrentUser(): User | null {
-    const storedUser = localStorage.getItem('currentUser');
-    return storedUser ? JSON.parse(storedUser) : null;
+    const user = this.users.find(user => user.email === email && user.password === password);
+    return !!user;
   }
 
   isLoggedIn(): boolean {
-    return this.getCurrentUser() !== null;
+    return !!localStorage.getItem('loggedInUser');
+  }
+
+  logout(): void {
+    localStorage.removeItem('loggedInUser');
+  }
+
+  setLoggedInUser(email: string): void {
+    localStorage.setItem('loggedInUser', email);
+  }
+
+  getLoggedInUser(): string | null {
+    return localStorage.getItem('loggedInUser');
   }
 }

@@ -35,12 +35,14 @@ export class AuthService {
   }
   constructor() {
     if (this.isLocalStorageAvailable()) {
+
       const storedUsers = localStorage.getItem('users');
       if (storedUsers) {
         this.users = JSON.parse(storedUsers);
       }
     }
   }
+
 
   register(nombre: string, email: string, password: string): boolean {
     if (this.users.find(user => user.email === email)) {
@@ -89,4 +91,15 @@ export class AuthService {
     const user = this.users.find(user => user.email === email);
     return user ? user.password : null;
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////// USUARIO ADMIN /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  getUsers(): User[] {
+    return this.users;
+  }
+
+
 }

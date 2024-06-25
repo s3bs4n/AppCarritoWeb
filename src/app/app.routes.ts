@@ -14,10 +14,11 @@ export const routes: Routes = [
     { path: 'carrito', component: CarritoComponent },
     { path: 'lista-productos', component: ListaProductosComponent },
     { path: 'login', component: LoginComponent },
+
     { path: 'admin-login', component: AdminLoginComponent },
     { path: 'admin-dashboard', component: AdminDashboardComponent},
-  
     { path: 'registro', component: RegistroComponent },
+    
     { path: 'contrasenia', component: ContraseniaComponent },
     { path: '**', redirectTo: 'admin-login' }
 ];

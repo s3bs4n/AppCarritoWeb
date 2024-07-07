@@ -18,9 +18,9 @@ export const routes: Routes = [
     { path: 'admin-login', component: AdminLoginComponent },
     { path: 'admin-dashboard', component: AdminDashboardComponent},
     { path: 'registro', component: RegistroComponent },
-    
+
     { path: 'contrasenia', component: ContraseniaComponent },
-    { path: '**', redirectTo: 'admin-login' }
+    { path: '**', redirectTo: 'login' }
 ];
 
 

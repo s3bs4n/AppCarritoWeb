@@ -12,12 +12,7 @@ export class JsonService {
       'Authorization': 'Bearer 632fca26-96ef-4bfc-8a35-3f97aeaf8c30'
     })
   }
-  // private baseUrl = 'https://firebasestorage.googleapis.com/v0/b/json-55172.appspot.com/o/';
-  private productosUrl = `https://firebasestorage.googleapis.com/v0/b/json-55172.appspot.com/o/productos.json?alt=media&token=ddc2f33d-195e-40fc-a4f8-5ea3ca7d8764`;
-  // private usuariosUrl = `${this.baseUrl}usuarios.json?alt=media&token=77b0d2f2-13ac-4584-9206-0daee71ed823`;
-
-  // private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/json-55172.appspot.com/o/personas.json?alt=media&token=77b0d2f2-13ac-4584-9206-0daee71ed823';
-
+  private productosUrl = `https://firebasestorage.googleapis.com/v0/b/json-55172.appspot.com/o/productos.json?alt=media&token=a07ad278-f89a-4d93-acd9-7b21789fdb13`;
   private lista:any;
 
   constructor(private http: HttpClient) {}

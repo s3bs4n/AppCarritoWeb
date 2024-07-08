@@ -9,7 +9,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 // import { AuthGuard } from './guards/auth.guard';
 // import { AdminGuard } from './guards/admin.guard';
-import { ListaPersonasComponent } from './components/lista-personas/lista-personas.component';
+// import { ListaPersonasComponent } from './components/lista-personas/lista-personas.component';
 
 export const routes: Routes = [
     { path: 'carrito', component: CarritoComponent },
@@ -21,8 +21,8 @@ export const routes: Routes = [
     { path: 'registro', component: RegistroComponent },
 
     { path: 'contrasenia', component: ContraseniaComponent },
-    { path: 'lista-personas', component: ListaPersonasComponent },
-    { path: '**', redirectTo: 'lista-personas' }
+    // { path: 'lista-personas', component: ListaPersonasComponent },
+    { path: '**', redirectTo: 'carrito' }
 ];
 
 

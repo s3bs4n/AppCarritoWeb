@@ -2,7 +2,8 @@
 
 <!-- HEADER -->
 <div class="container">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom header-">
+    <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom header-">
         <div class="col-md-6 mb-2 mb-md-0">
             <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
                 <img src="../../../assets/img/logo.jpg" id="logo" height="32" alt="Logo">
@@ -35,12 +36,14 @@
                                 <td>{{ formatearPrecio(producto.precio) }}</td>
                                 <td>{{ producto.cantidad }}</td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm borrar-producto" (click)="eliminarProducto(producto.id)">X</button>
+                                    <button class="btn btn-danger btn-sm borrar-producto"
+                                        (click)="eliminarProducto(producto.id)">X</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <button id="vaciar-carrito" class="btn btn-danger w-100 mb-2" (click)="vaciarCarrito()">Vaciar Carrito</button>
+                    <button id="vaciar-carrito" class="btn btn-danger w-100 mb-2" (click)="vaciarCarrito()">Vaciar
+                        Carrito</button>
                     <button id="pagar-carrito" class="btn btn-success w-100" (click)="irAPagar()">Ir a Pagar</button>
                 </div>
             </div>
@@ -59,7 +62,8 @@
 
 <div class="barra">
     <div class="container-sm">
-        <div class="text-center d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+        <div
+            class="text-center d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
             <div>
                 <p>Más de 5.000 productos <br>Exploralos todos </p>
             </div>
@@ -85,7 +89,8 @@
                     <p class="card-text">{{ producto.categoria }}</p>
                     <img src="../../../assets/img/estrellas.png" class="mb-2" alt="Estrellas">
                     <p class="fs-5 fw-bold text-end precio">{{ formatearPrecio(producto.precio) }}</p>
-                    <button class="btn btn-primary w-100 agregar-carrito fw-bold" (click)="agregarProducto(producto)">Agregar Al Carrito</button>
+                    <button class="btn btn-primary w-100 agregar-carrito fw-bold"
+                        (click)="agregarProducto(producto)">Agregar Al Carrito</button>
                 </div>
             </div>
         </div>

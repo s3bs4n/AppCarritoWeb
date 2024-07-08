@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "nombre": "Juan Pérez",
+    "edad": 28,
+    "correo": "juan.perez@example.com"
+  },
+  {
+    "id": 2,
+    "nombre": "Ana García",
+    "edad": 34,
+    "correo": "ana.garcia@example.com"
+  },
+  {
+    "id": 3,
+    "nombre": "Carlos López",
+    "edad": 22,
+    "correo": "carlos.lopez@example.com"
+  },
+  {
+    "id": 4,
+    "nombre": "María Rodríguez",
+    "edad": 30,
+    "correo": "maria.rodriguez@example.com"
+  },
+  {
+    "id": 5,
+    "nombre": "Pedro Sánchez",
+    "edad": 25,
+    "correo": "pedro.sanchez@example.com"
+  },
+  {
+    "id": 6,
+    "nombre": "Lucía Martínez",
+    "edad": 29,
+    "correo": "lucia.martinez@example.com"
+  },
+  {
+    "id": 7,
+    "nombre": "Miguel Fernández",
+    "edad": 33,
+    "correo": "miguel.fernandez@example.com"
+  },
+  {
+    "id": 8,
+    "nombre": "Laura Gómez",
+    "edad": 27,
+    "correo": "laura.gomez@example.com"
+  },
+  {
+    "id": 9,
+    "nombre": "Javier Ruiz",
+    "edad": 31,
+    "correo": "javier.ruiz@example.com"
+  },
+  {
+    "id": 10,
+    "nombre": "Elena Díaz",
+    "edad": 26,
+    "correo": "elena.diaz@example.com"
+  }
+]

@@ -13,7 +13,7 @@ export class JsonService {
     })
   }
 
-  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/json-55172.appspot.com/o/personas.json?alt=media&token=41211a1b-a130-4fad-8a03-77d1d0aa0a18';
+  private jsonUrl = 'https://firebasestorage.googleapis.com/v0/b/json-55172.appspot.com/o/personas.json?alt=media&token=77b0d2f2-13ac-4584-9206-0daee71ed823';
 
   private lista:any;
 

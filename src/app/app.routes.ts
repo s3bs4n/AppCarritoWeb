@@ -7,8 +7,10 @@ import { ContraseniaComponent } from './components/contrasenia/contrasenia.compo
 
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 // import { AuthGuard } from './guards/auth.guard';
 // import { AdminGuard } from './guards/admin.guard';
+// import { ListaPersonasComponent } from './components/lista-personas/lista-personas.component';
 
 export const routes: Routes = [
     { path: 'carrito', component: CarritoComponent },
@@ -17,10 +19,11 @@ export const routes: Routes = [
 
     { path: 'admin-login', component: AdminLoginComponent },
     { path: 'admin-dashboard', component: AdminDashboardComponent},
+    { path: 'admin-products', component: AdminProductsComponent},
     { path: 'registro', component: RegistroComponent },
-    
+
     { path: 'contrasenia', component: ContraseniaComponent },
-    { path: '**', redirectTo: 'admin-login' }
+    { path: '**', redirectTo: 'admin-products' }
 ];
 
 

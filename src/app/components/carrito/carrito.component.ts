@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { JsonService } from '../../services/json.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 interface Producto {
     id: number;
@@ -17,127 +19,28 @@ interface CarritoProducto extends Producto {
 @Component({
     selector: 'app-carrito',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, HttpClientModule],
     templateUrl: './carrito.component.html',
-    styleUrl: './carrito.component.css'
+    styleUrl: './carrito.component.css',
+    providers: [JsonService]
 })
 
 export class CarritoComponent implements OnInit {
-    productos = [
-        {
-            id: 1,
-            nombre: 'SNES CIB DK Set',
-            categoria: 'Consolas',
-            precio: 250000,
-            imagen: 'assets/img/producto1.jpg'
-        },
-        {
-            id: 2,
-            nombre: 'Letrero Luminoso SNES',
-            categoria: 'Decoración',
-            precio: 15000,
-            imagen: 'assets/img/producto2.jpg'
-        },
-        {
-            id: 3,
-            nombre: 'Kirby MousePad + Tazón',
-            categoria: 'Decoración',
-            precio: 15000,
-            imagen: 'assets/img/producto3.jpg'
-        },
-        {
-            id: 4,
-            nombre: 'SNES control',
-            categoria: 'Accesorios',
-            precio: 30000,
-            imagen: 'assets/img/producto4.jpg'
-        },
-        {
-            id: 5,
-            nombre: 'Cuadro 3D Super Mario World',
-            categoria: 'Decoración',
-            precio: 25000,
-            imagen: 'assets/img/producto5.jpg'
-        },
-        {
-            id: 6,
-            nombre: 'Star Fox CIB',
-            categoria: 'Juegos',
-            precio: 150000,
-            imagen: 'assets/img/producto6.jpg'
-        },
-        {
-            id: 7,
-            nombre: 'Póster Zelda',
-            categoria: 'Decoración',
-            precio: 7000,
-            imagen: 'assets/img/producto7.jpg'
-        },
-        {
-            id: 8,
-            nombre: 'Killer Instinct CIB',
-            categoria: 'Juegos',
-            precio: 300000,
-            imagen: 'assets/img/producto8.jpg'
-        },
-        {
-            id: 9,
-            nombre: 'Street Fighter 2',
-            categoria: 'Juegos',
-            precio: 60000,
-            imagen: 'assets/img/producto9.jpg'
-        },
-        {
-            id: 10,
-            nombre: 'Polera Mortal Kombat 2',
-            categoria: 'Accesorios',
-            precio: 20000,
-            imagen: 'assets/img/producto10.jpg'
-        },
-        {
-            id: 11,
-            nombre: 'Mini SNES',
-            categoria: 'Consolas',
-            precio: 150000,
-            imagen: 'assets/img/producto11.jpg'
-        },
-        {
-            id: 12,
-            nombre: 'Super Mario World',
-            categoria: 'Juegos',
-            precio: 35000,
-            imagen: 'assets/img/producto12.jpg'
-        }
-    ];
-
-
-    agregarAlCarrito(producto: any): void {
-        // Lógica para agregar el producto al carrito
-        console.log(`Producto agregado: ${producto.nombre}`);
-    }
-
-    formatearPrecio(precio: number): string {
-        return '$' + precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-
-    irAPagar(): void {
-      this.guardarCarritoEnLocalStorage();
-      this.router.navigate(['/lista-productos']);
-    }
-
-    salir(): void {
-      this.router.navigate(['/login']);
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+  productos: Producto[] = [];
   articulosCarrito: CarritoProducto[] = [];
 
-  // constructor() {}
-  constructor(private router: Router) { }
+  constructor(private jsonService: JsonService, private router: Router) {}
 
   ngOnInit(): void {
+    this.jsonService.getProductos().subscribe(
+      (data: Producto[]) => {
+        this.productos = data;
+      },
+      error => {
+        console.error('Error cargando productos:', error);
+      }
+    );
+
     this.articulosCarrito = this.obtenerCarritoDeLocalStorage();
     this.carritoHTML();
   }
@@ -188,13 +91,17 @@ export class CarritoComponent implements OnInit {
     }
   }
 
-  pagarCarrito(): void {
+  irAPagar(): void {
     this.guardarCarritoEnLocalStorage();
-    window.location.href = 'listado-productos.component.html';
+    this.router.navigate(['/lista-productos']);
   }
 
-  formatCurrency(value: number): string {
-    return '$' + value.toLocaleString('es-CL');
+  salir(): void {
+    this.router.navigate(['/login']);
+  }
+
+  formatearPrecio(precio: number): string {
+    return '$' + precio.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   }
 
   private isLocalStorageAvailable(): boolean {
@@ -207,7 +114,4 @@ export class CarritoComponent implements OnInit {
       return false;
     }
   }
-
-
-
 }

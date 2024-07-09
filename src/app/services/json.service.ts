@@ -21,6 +21,17 @@ export class JsonService {
     return this.http.get(this.productosUrl);
   }
 
+  MetodoProductos(listaProductos:any) {
+      console.log(listaProductos);
+      this.http.post(this.productosUrl,listaProductos,this.httpOptions).subscribe(
+        response => {
+          console.log('Archivo JSON sobrescrito con exito', response);
+        },
+        error => {
+          console.error('Error al sobrescribir el archivo JSON', error);
+        })
+    }
+
   // getUsuarios(): Observable<any> {
   //   return this.http.get(this.usuariosUrl);
   // }
